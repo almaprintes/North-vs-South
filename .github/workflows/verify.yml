@@ -1,0 +1,27 @@
+name: Verify DEV Prototype
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate static HTML and embedded JavaScript
+        shell: bash
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          s = Path('index.html').read_text(encoding='utf-8')
+          assert '<!doctype html>' in s.lower()
+          assert '<script>' in s and '</script>' in s
+          assert '</html>' in s
+          assert 'THUMBS' in s and 'TABLETOP' in s
+          Path('/tmp/nvs-app.js').write_text(s.split('<script>',1)[1].split('</script>',1)[0],encoding='utf-8')
+          print('HTML and prototype markers: OK')
+          PYCODE
+          node --check /tmp/nvs-app.js
