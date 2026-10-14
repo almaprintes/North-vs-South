@@ -39,3 +39,10 @@ DEV 0.1 es una maqueta funcional; los personajes 3D y el equilibrio definitivo d
 - Ajustar presión de ambos luchadores, ritmo y resistencia con datos reales de juego.
 - Añadir sistemas de cámara, IK y animaciones 3D.
 - Incorporar modo historia, ciudades y torneos NORTH vs SOUTH.
+
+## DEV 0.1.1 · Primera revisión de ergonomía
+
+- Pantalla de combate adaptada a móviles de menor altura (hasta 375 × 667 CSS px en las pruebas).
+- Se prioriza mantener ambos botones L/R visibles y accesibles sin desplazamiento vertical durante la ronda.
+- En pantallas cortas se ocultan indicadores secundarios y se reduce la arena sin cambiar las físicas ni estadísticas.
+- La validación es de navegador móvil simulado; queda pendiente la prueba táctil real en iPhone y la confirmación externa de GitHub Pages y Actions.
