@@ -40,7 +40,3 @@ La queja de ausencia de movimiento tenía 3 causas: la reproducción estaba ocul
 
 ## Feedback pendiente 23/11/2026 — Victoria del azul desde atrás
 El rojo ganando está casi perfecto y **no debe alterarse**. La victoria del azul debe mostrarlo desde la espalda, inclinándose sobre las muñecas para alcanzar **la almohadilla de PIN del extremo opuesto de la mesa**, no la misma de la victoria roja. Las muñecas no necesitan quedar claramente visibles; sí debe ser anatómicamente creíble. Sigue siendo una corrección gráfica **pendiente de generación e inspección visual**, no arreglada por la selección de sprites. Especificación y criterios completos: `docs/BLUE_VICTORY_CAMERA_PIN_SPEC_2026-11-23.md`. Mantener 4 almohadillas (2 codos + 2 PIN); no espejar la victoria roja ni sustituir arte premium por muñecos low-poly.
-
-
-## DEV 0.4.2 candidato (23/11/2026)
-Nuevo atlas azul alternativo bajo `?blueCandidate=1`, conservando SOUTH original y NORTH original por defecto. La nueva postura final enseña más la espalda del ganador azul, pero no se declara versión definitiva: diferencias de encuadre y transición visibles. Pedir aprobación visual y pulir arte antes de predeterminarlo. Revisar `README.md` y la especificación de PIN azul.

@@ -16,10 +16,6 @@ assert(source.includes("poseDemoStart=performance.now()"),'auto demonstration');
 assert(source.includes("frames-south-v041.webp"),'south atlas');
 assert(source.includes("frames-north-v04.webp"),'north atlas');
 assert(source.includes("pose-scrubber"),'manual scrubber');
-assert(source.includes("get('blueCandidate') === '1'"),'optional candidate flag');
-const candidate=require('path').join(__dirname,'../assets/frames-north-v042-candidate.webp');
-const candidateBytes=fs.readFileSync(candidate);
-assert(candidateBytes.length>40000&&candidateBytes.toString('latin1',0,4)==='RIFF'&&candidateBytes.toString('latin1',8,12)==='WEBP','optional candidate asset');
 for(const side of ['north-v04','south-v041']){
  const file=require('path').join(__dirname,`../assets/frames-${side}.webp`);
  const b=fs.readFileSync(file);
@@ -38,11 +34,10 @@ const paint=[];
 const canvas={width:724,height:362,getContext(){return {clearRect(){},drawImage(...a){paint.push(a)},fillRect(){},fillText(){},createLinearGradient(){return {addColorStop(){}}}}}};
 const label={textContent:''};
 const ctx2={
-  nvsRig3d:null,nvsRig2d:null,framePreview:true,blueCandidate:false,poseDemoStart:0,poseManual:null,lastPose:50,
+  nvsRig3d:null,nvsRig2d:null,framePreview:true,poseDemoStart:0,poseManual:null,lastPose:50,
   premiumArenaArt:{complete:false,naturalWidth:0,naturalHeight:0},
   northAtlas:{complete:true,naturalWidth:2172,naturalHeight:724,which:'NORTH'},
   southAtlas:{complete:true,naturalWidth:2172,naturalHeight:724,which:'SOUTH'},
-  blueCandidateAtlas:{complete:true,naturalWidth:2172,naturalHeight:724,which:'BLUE_CANDIDATE'},
   document:{getElementById(){return canvas},querySelector(){return label}},
   drawPoseHud(){},$(){return {textContent:'',style:{}}},
   performance:{now(){return 2000}},currentFighter(){return {hemi:ctx2.testHemi}},
@@ -63,9 +58,3 @@ assert.deepEqual(drawn('NORTH',100),{side:'NORTH',sx:1448,sy:362});
 assert.deepEqual(drawn('SOUTH',0),{side:'NORTH',sx:1448,sy:362});
 assert.deepEqual(drawn('SOUTH',100),{side:'SOUTH',sx:1448,sy:362});
 console.log('PASS: actual renderer chooses the correct image/pose for both player hemispheres');
-// Optional perspective experiment must never alter the red/SOUTH animation.
-ctx2.blueCandidate=true;
-assert.deepEqual(drawn('NORTH',100),{side:'BLUE_CANDIDATE',sx:1448,sy:362});
-assert.deepEqual(drawn('SOUTH',100),{side:'SOUTH',sx:1448,sy:362});
-assert.deepEqual(drawn('NORTH',0),{side:'SOUTH',sx:1448,sy:362});
-console.log('PASS: blue candidate opt-in and original SOUTH atlas preserved');
