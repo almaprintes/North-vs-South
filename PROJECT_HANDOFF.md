@@ -26,3 +26,7 @@ Verificar el workflow/deploy verde antes de declarar Pages publicado; no afirmar
 ## DEV 0.3 · Animación correcta
 
 La deformación de fotografías/sprites se sustituye por `rig3d.js` (WebGL2, esqueleto procedural con segmentos rígidos y geometría 3D) y `rig2d.js` (reserva articulada sin deformar fotografías). `index.html` conserva físicas, técnicas, entrenamientos y stances. El protagonista es siempre el competidor de la izquierda; `pos=100` representa PIN en la almohadilla derecha roja, `pos=0` PIN en la almohadilla izquierda azul. Longitudes rígidas y apoyo de codos verificados en 101 posiciones mediante `tests/rig.test.cjs`. El PIN permanece en pantalla 850 ms antes del resultado. **Pendiente:** pruebas visuales reales WebGL2 en Safari/iPhone; no presentar estos personajes estilizados como render cinematográfico definitivo.
+
+
+### Corrección DEV 0.3.1 — 23/11/2026
+El usuario rechazó la sustitución de las ilustraciones premium por muñecos low-poly. Se restaura el arte premium por defecto y se oculta el rig básico tras `?devRig=1`. El arte actual es estático: no afirmar que ya existe animación de personajes de calidad. Conservar físicas y stances. Para la siguiente fase, priorizar rig y texturas de alta fidelidad con animación de PIN anatómicamente correcta.
