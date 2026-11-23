@@ -21,3 +21,8 @@ Fecha: 2026-10-14. Rama principal prevista: `main`. Prototipo DEV 0.1.
 ## Política de publicación
 
 Verificar el workflow/deploy verde antes de declarar Pages publicado; no afirmar que es live sin comprobar el sitio.
+
+
+## DEV 0.3 · Animación correcta
+
+La deformación de fotografías/sprites se sustituye por `rig3d.js` (WebGL2, esqueleto procedural con segmentos rígidos y geometría 3D) y `rig2d.js` (reserva articulada sin deformar fotografías). `index.html` conserva físicas, técnicas, entrenamientos y stances. El protagonista es siempre el competidor de la izquierda; `pos=100` representa PIN en la almohadilla derecha roja, `pos=0` PIN en la almohadilla izquierda azul. Longitudes rígidas y apoyo de codos verificados en 101 posiciones mediante `tests/rig.test.cjs`. El PIN permanece en pantalla 850 ms antes del resultado. **Pendiente:** pruebas visuales reales WebGL2 en Safari/iPhone; no presentar estos personajes estilizados como render cinematográfico definitivo.
