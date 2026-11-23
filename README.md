@@ -82,3 +82,8 @@ Este es un **rig 3D funcional y estilizado**, no personajes humanos de calidad c
 - El prototipo de rig solo se muestra bajo `?devRig=1`, para pruebas de geometría y PIN.
 - Próximo objetivo gráfico: personajes de alta fidelidad riggeados, con huesos e IK, anatomía correcta y animaciones que terminen al contacto con la almohadilla.
 - Pendiente: verificar el renderizado en Safari real y el estado del despliegue de GitHub Pages.
+
+
+## DEV 0.4 — Prueba de fotogramas de NORTH
+
+Accede a `?frames=1` para probar seis imágenes premium de NORTH (50–100%) asociadas al marcador. La vista predeterminada no cambia y las poses de SOUTH **siguen pendientes de validación**. Consulta [el estado y la geometría de esta prueba](docs/FRAME_PREVIEW_0.4.md).
