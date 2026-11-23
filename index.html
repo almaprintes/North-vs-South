@@ -149,7 +149,7 @@ function roundPath(c,pts){c.beginPath();c.moveTo(pts[0][0],pts[0][1]);for(let i=
    When the sprite sheet cannot load, the original real-time vector arm animation is used. */
 const premiumPoseAtlas = new Image();
 premiumPoseAtlas.decoding = 'async';
-premiumPoseAtlas.src = 'assets/arena-poses.webp';
+premiumPoseAtlas.src = 'assets/arena-poses.webp?v=021-rig2';
 premiumPoseAtlas.addEventListener('load', () => { if(state.screen === 'fight') drawArena(state.game || {pos:50,energy:100,aiEnergy:100,elapsed:0}); });
 let poseDisplayed = 50;
 let poseFrameTime = 0;
