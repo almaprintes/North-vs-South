@@ -43,7 +43,13 @@ jobs:
           assert atlas.read_bytes()[:4] == b'RIFF'
           html=Path('index.html').read_text(encoding='utf-8')
           assert "frames-north-v04.webp" in html
-          assert "SOUTH: secuencia pendiente de validación" in html
-          assert "framePreview && currentFighter().hemi==='NORTH'" in html
-          print('Experimental frame atlas present; opposite-side misuse guarded.')
+          assert Path('assets/frames-south-v041.webp').stat().st_size > 50000
+          assert Path('assets/demo-both-v041.gif').stat().st_size > 100000
+          assert Path('preview.html').is_file()
+          assert "frames-south-v041.webp" in html
+          assert "const framePreview = !devRig;" in html
+          assert "function frameForDominance" in html
+          assert "poseDemoStart=performance.now()" in html
+          print('Both atlas assets present; auto-preview enabled.')
           PYCODE
+          node tests/frames.test.cjs
