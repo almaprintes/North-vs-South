@@ -74,16 +74,52 @@ DEV 0.1 es una maqueta funcional; los personajes 3D y el equilibrio definitivo d
 
 Este es un **rig 3D funcional y estilizado**, no personajes humanos de calidad cinematográfica con piel y expresión fotorrealistas. El objetivo de este paso es **corregir la anatomía y la mecánica visual** antes de producir modelos y texturas premium. Los luchadores siguen siendo modelos genéricos, no avatares únicos de la historia.
 
-
 ## DEV 0.3.1 — Corrección visual prioritaria (23/11/2026)
 
-- Ilustración premium restaurada como vista principal; el rig WebGL low-poly ya no es la experiencia predeterminada.
-- La imagen de los luchadores es **estática**. No se muestra como si fuera una animación ni se añade un círculo artificial sobre las manos. Indicadores, técnicas y controles siguen siendo interactivos.
-- El prototipo de rig solo se muestra bajo `?devRig=1`, para pruebas de geometría y PIN.
-- Próximo objetivo gráfico: personajes de alta fidelidad riggeados, con huesos e IK, anatomía correcta y animaciones que terminen al contacto con la almohadilla.
-- Pendiente: verificar el renderizado en Safari real y el estado del despliegue de GitHub Pages.
+- Restaurada la ilustración premium en la vista principal del combate; la prueba WebGL con luchadores de estilo low-poly **ya no aparece por defecto**.
+- La ilustración premium es **estática**: no se presenta como animación de los brazos, y no se dibuja un círculo simulando el agarre. Los indicadores de dominio, energía y técnicas sí son interactivos.
+- El rig 3D sigue disponible *solo* para comprobaciones internas abriendo `?devRig=1` (no es arte final). Con ese parámetro vuelve a mostrarse el botón de prueba de ambos PIN.
+- Se mantienen el motor de combate, la progresión, los minijuegos y los controles THUMBS/TABLETOP.
+- Para tener movimiento anatómico **y** el aspecto premium hará falta un modelo 3D riggeado/texturizado de calidad o una animación 2D construida con poses coherentes y articulaciones reales. No equiparar una ilustración fija, una interpolación fotográfica o un rig low-poly a ese objetivo.
+- Pendiente: validar visualmente en Safari real y revisar el deploy de Pages/Actions.
 
 
-## DEV 0.4 — Prueba de fotogramas de NORTH
+# NORTH vs SOUTH — DEV 0.4, preview de fotogramas
 
-Accede a `?frames=1` para probar seis imágenes premium de NORTH (50–100%) asociadas al marcador. La vista predeterminada no cambia y las poses de SOUTH **siguen pendientes de validación**. Consulta [el estado y la geometría de esta prueba](docs/FRAME_PREVIEW_0.4.md).
+## Qué funciona
+- Reproductor de **6 imágenes premium distintas** para el dominio de NORTH entre 50% y 100%, en pasos de 10%.
+- Sprite atlas WebP de 247 KB. Los fotogramas se seleccionan desde el estado real del combate.
+- Las manos no se distorsionan ni se estiran en código: se muestra una imagen completa por posición.
+- Las dos almohadillas de codo y las dos de PIN son distintas en la nueva secuencia NORTH.
+- La física RPG, los dos stances y los minijuegos continúan sin cambios.
+- Si el atlas no carga, el juego mantiene la escena ilustrada anterior.
+
+## Acceso de prueba
+- `?frames=1`: activa la prueba de 6 fotogramas de NORTH.
+- `?devRig=1`: rig de geometría anterior solo para desarrollo.
+- Sin parámetros: mantiene la vista premium estable de DEV 0.3.1.
+
+## Limitaciones pendientes
+- No se ha validado todavía una secuencia equivalente de SOUTH. Si el rival domina (0..49), la vista experimental conserva la postura central y **se indica que faltan imágenes**; no se representa una falsa victoria de NORTH.
+- 6 fotogramas, no 21. No se declara terminada la animación completa de ambos lados.
+- La cámara y los personajes son coherentes dentro de los seis frames, pero la secuencia es deliberadamente escalonada, no rig 3D.
+- Pendiente de comprobar en iPhone/Safari real y Pages.
+
+## Pruebas ejecutadas
+- `node --check` en JS del juego y rigs, `node tests/rig.test.cjs` correcto.
+- Tamaño del atlas y asignación paso/frame comprobados.
+
+
+## DEV 0.4.1 — Animación por fotogramas visible por defecto (23/11/2026)
+
+**Corrección tras la prueba en iPhone:** DEV 0.4 exigía `?frames=1`, un protagonista NORTH y pulsar «Ver secuencia» para apreciar movimiento, por lo que parecía estático.
+
+- Ahora los dos atlas se cargan siempre en el combate (salvo `?devRig=1`).
+- Al abrir **Combate** comienza automáticamente una demostración de ida y vuelta de NORTH y SOUTH.
+- Deslizador bajo la escena para elegir del 0% al 100% sin jugar; desaparece durante la ronda.
+- El combate real selecciona el fotograma según su dominio, con correspondencia hemisférica correcta incluso si el protagonista es SOUTH.
+- Se usa una composición visual fija (NORTH azul izquierda / SOUTH rojo derecha). Los textos de los competidores y la barra se ordenan del mismo modo.
+- Dos atlas WebP 3×2 de seis fotogramas cada uno; sin deformaciones programáticas.
+- Página de prueba sin JavaScript: [`preview.html`](preview.html), con GIF de dos sentidos.
+- **Limitación:** seis posturas por hemisferio, no diez. El PIN final de SOUTH necesita una revisión adicional de la almohadilla; esto no es una animación anatómica definitiva. Los actores de este arte son ilustrativos, no los modelos personalizados de la historia.
+- Pruebas automáticas del mapeo 0..100 y sintaxis; pendiente validar Safari real y Pages en el dispositivo.
