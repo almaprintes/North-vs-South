@@ -29,3 +29,7 @@ Estado: **especificación registrada, arte no corregido ni validado aún**.
 
 ## Alcance
 Es una corrección de **arte, puesta en escena y anatomía**. No modificar estadísticas, físicas RPG, stances THUMBS/TABLETOP ni controles.
+
+
+## Avance experimental DEV 0.4.2 — 23/11/2026
+Se produjo un candidato gráfico nuevo con el atleta azul mostrando la espalda en el PIN y se preparó una prueba opcional bajo `?blueCandidate=1`. El código conserva el atlas SOUTH original y usa NORTH original sin parámetro. **Candidato no aprobado:** la continuidad de vestuario, cámara, escala y textura entre NORTH y SOUTH no está resuelta; requiere validación visual en iPhone. No marcar como implementado definitivamente.

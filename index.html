@@ -219,6 +219,7 @@ function roundPath(c,pts){c.beginPath();c.moveTo(pts[0][0],pts[0][1]);for(let i=
 let poseDemoStart=0;
 const devRig = new URLSearchParams(location.search).get('devRig') === '1';
 const framePreview = !devRig; // both directions enabled by default, with no URL parameter
+const blueCandidate = framePreview && new URLSearchParams(location.search).get('blueCandidate') === '1'; // opt-in art QA only
 if(framePreview){
  document.body.classList.add('frame-preview','sprite-mode');
  const arena = document.getElementById('arena');
@@ -241,7 +242,7 @@ if(nvsRig3d){
  * Physics g.pos = YOUR dominance. Image composition always NORTH left/SOUTH right.
  * Never stretch, shear or mirror the photographed athletes. */
 let poseManual=null, lastPose=50;
-const northAtlas=new Image(), southAtlas=new Image();
+const northAtlas=new Image(), southAtlas=new Image(), blueCandidateAtlas=new Image();
 for(const [name,img,url] of [
  ['NORTH',northAtlas,'assets/frames-north-v04.webp?v=041'],
  ['SOUTH',southAtlas,'assets/frames-south-v041.webp?v=041']
@@ -250,6 +251,12 @@ for(const [name,img,url] of [
  img.onload=()=>{console.info('NVS: '+name+' atlas loaded',img.naturalWidth,img.naturalHeight);if(state.screen==='fight')drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0})};
  img.onerror=()=>{console.error('NVS: '+name+' atlas failed '+url);document.querySelector('.arena-premium-label').textContent='ERROR AL CARGAR FRAMES '+name};
  img.src=url;
+}
+if(blueCandidate){
+ blueCandidateAtlas.decoding='async';
+ blueCandidateAtlas.onload=()=>{if(state.screen==='fight')drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0})};
+ blueCandidateAtlas.onerror=()=>console.error('NVS: optional BLUE candidate unavailable; using original NORTH atlas');
+ blueCandidateAtlas.src='assets/frames-north-v042-candidate.webp?v=042';
 }
 const validAtlas=img=>img.complete&&img.naturalWidth===2172&&img.naturalHeight===724;
 const northDom=g=>currentFighter().hemi==='NORTH'?Number(g.pos??50):100-Number(g.pos??50);
@@ -294,7 +301,8 @@ function drawArena(g){
  if(framePreview){
   const pose=frameForDominance(n);
   const isNorth=pose.side==='NORTH';
-  const sheet=isNorth?northAtlas:southAtlas;
+  const candidateActive=isNorth&&blueCandidate&&validAtlas(blueCandidateAtlas);
+  const sheet=candidateActive?blueCandidateAtlas:(isNorth?northAtlas:southAtlas);
   if(validAtlas(sheet)){
    const frame=pose.frame;
    ctx.drawImage(sheet,(frame%3)*724,Math.floor(frame/3)*362,724,362,0,0,W,H);
@@ -305,7 +313,7 @@ function drawArena(g){
     $('#dom-bar').style.width=n+'%';
    }
    const status=isNorth?'NORTH AVANZA':'SOUTH AVANZA';
-   document.querySelector('.arena-premium-label').textContent=`FOTOGRAMA ${frame+1}/6 · ${status}`;
+   document.querySelector('.arena-premium-label').textContent=`${candidateActive?'PRUEBA AZUL V0.4.2 · ':''}FOTOGRAMA ${frame+1}/6 · ${status}`;
    return;
   }
   document.querySelector('.arena-premium-label').textContent='CARGANDO FRAMES · NORTH Y SOUTH';
