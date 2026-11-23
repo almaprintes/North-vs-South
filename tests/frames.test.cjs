@@ -40,7 +40,7 @@ function extractFunc(name){
 const previewFn=[extractFunc('frameForPreview')];
 const demoFn=[extractFunc('demoPosition')];
 assert(previewFn&&demoFn,'one-way demo functions');
-const isolation={};vm.createContext(isolation);
+const isolation={demoDurationSeconds:3.8};vm.createContext(isolation);
 vm.runInContext(previewFn[0]+demoFn[0]+';globalThis.preview=frameForPreview;globalThis.demo=demoPosition;',isolation);
 for(const side of ['NORTH','SOUTH']){
  for(let sec=0;sec<=38;sec++){
