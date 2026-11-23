@@ -48,3 +48,12 @@ DEV 0.1 es una maqueta funcional; los personajes 3D y el equilibrio definitivo d
 - Si falla la carga del arte, se mantiene el dibujo procedural 2D previo como reserva.
 - Los personajes de la escena son **arte conceptual fijo**, no avatares individuales del luchador seleccionado ni rig 3D articulado. Las expresiones y posturas fotográficas no están animadas aún.
 - Pendiente: pruebas en dispositivos reales, sprites por personaje, rig/IK y animación de brazos, optimización visual final.
+
+## DEV 0.2.1 · Movimiento visible de brazos
+
+- Corregido el problema comunicado: la escena premium ya no queda inmóvil mientras un círculo simula el movimiento. Se ha retirado ese círculo.
+- Un atlas WebP de 21 fotogramas deformados mueve manos y antebrazos en función de `g.pos` (0-100); interpolación visual y temblor vinculados a energía.
+- Añadida una demostración de movimiento en la pantalla de combate, sin alterar la partida.
+- La animación es una solución **2D provisional**: no hay rig 3D, cambios faciales independientes ni pin anatómicamente exacto. El próximo paso gráfico es construir sprites separados/rig IK real.
+- Si falla la carga del atlas, se emplea la animación vectorial anterior, no la ilustración estática.
+- Pendiente: comprobar Safari/iPhone real y comportamiento de Pages.
