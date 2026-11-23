@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08111e">
-<title>NORTH vs SOUTH · Prototipo jugable DEV 0.4 · Fotogramas premium (prueba)</title>
+<title>NORTH vs SOUTH · Prototipo jugable DEV 0.4.1 · Fotogramas premium NORTH y SOUTH</title>
 <style>
 :root{color-scheme:dark;--bg:#07111e;--panel:#111f31;--line:#27405a;--text:#f4f7fd;--muted:#98acc2;--blue:#459fff;--red:#f36b65;--gold:#ffc870;--green:#55d5a7;--radius:18px}
 *{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;background:linear-gradient(160deg,#091525,#08101b 67%,#0e1929);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.35;cursor:default}button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}button,.tap-button,.edit-button{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}h1,h2,h3,p{margin-top:0}.app{max-width:520px;min-height:100dvh;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 13px) 14px calc(env(safe-area-inset-bottom,0px) + 20px)}.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:8px}.brand{font-weight:1000;font-size:19px;letter-spacing:-.8px;line-height:1.06}.brand strong{color:#79beff}.micro{font-size:10px;letter-spacing:1.7px;font-weight:800;color:var(--muted);text-transform:uppercase}.pill{font-size:10px;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:#afc7df;background:#10233a;white-space:nowrap}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px}.tab{padding:10px 5px;border:1px solid #294056;border-radius:11px;color:#a9bfd5;background:#112034;font-size:12px;font-weight:750}.tab.active{color:white;background:#244c78;border-color:#6aace7}.screen{display:none}.screen.active{display:block}.section-title{font-size:25px;line-height:1.13;letter-spacing:-.8px;margin:6px 0 7px;font-weight:850}.sub{color:var(--muted);font-size:13px;line-height:1.55;margin:0 0 14px}.panel{background:linear-gradient(140deg,#15263b,#0f1b2c);border:1px solid var(--line);border-radius:var(--radius);padding:15px;margin-bottom:12px;box-shadow:0 10px 30px #0002}.panel.flat{box-shadow:none}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.tiny{font-size:11px;color:var(--muted)}.muted{color:var(--muted)}.highlight{color:var(--gold)}.blue{color:#79bdff}.red{color:#ffa09c}.btn{border:1px solid #67baff;background:linear-gradient(180deg,#2789e6,#1862b5);color:white;border-radius:12px;padding:13px 16px;font-weight:850;font-size:14px;min-height:45px}.btn.secondary{background:#1b2e44;border-color:#36526d;color:#dbeafa}.btn.ghost{border-color:#294259;background:#101e2f;color:#b4cce5}.btn.full{width:100%}.btn.small{min-height:36px;padding:7px 10px;font-size:12px}.btn.emph{background:linear-gradient(130deg,#e6a841,#c9812e);border-color:#ffd47c;color:#251706}.btn.ready{box-shadow:0 0 0 2px #ffdb7752,0 0 21px #f6b94a55;animation:glow 1.7s ease-in-out infinite}@keyframes glow{50%{box-shadow:0 0 0 2px #ffda77aa,0 0 23px #f6b94a99}}
@@ -81,16 +81,33 @@ body.dev-rig #pose-demo:not(.hide){display:inline-block !important}
 body.frame-preview #pose-demo:not(.hide){display:inline-block!important}
 body.frame-preview .arena canvas#arena{aspect-ratio:2/1}
 body.frame-preview .arena-premium-label{color:#d7efff}
+
+/* DEV 0.4.1 — premium frame playback is default, not behind a query parameter */
+body.sprite-mode #pose-demo:not(.hide){display:inline-block!important}
+body.sprite-mode .arena canvas#arena{aspect-ratio:2/1}
+body.sprite-mode .arena-premium-label{background:#051728ce;color:#c5edff}
+.pose-scrubber{padding:10px 12px 8px;background:#102034;border:1px solid #3d6687;border-radius:12px;margin:8px 0 4px}
+.pose-scrubber .row{gap:8px;margin-bottom:7px;align-items:center;font-size:11px}
+.pose-scrubber b{font-size:11px}
+.pose-scrubber #pose-preview-value{color:#c3dfff;font-size:10px;text-align:right}
+.pose-scrubber input{width:100%;accent-color:#57b2fd;touch-action:pan-x}
+.pose-ends{display:flex;justify-content:space-between;font-size:9px;color:#91b1ce;margin-top:2px}
+.active-match #pose-scrubber-area{display:none}
+body.dev-rig #pose-scrubber-area{display:none}
 </style>
 </head>
 <body>
 <div class="app">
- <header class="header"><div><div class="micro">CRAFT RACE STUDIO · PROTOTIPO</div><div class="brand"><strong>NORTH</strong> <span style="color:#839db6">vs</span> <span style="color:#ff8280">SOUTH</span></div></div><span class="pill">DEV · 0.4</span></header>
+ <header class="header"><div><div class="micro">CRAFT RACE STUDIO · PROTOTIPO</div><div class="brand"><strong>NORTH</strong> <span style="color:#839db6">vs</span> <span style="color:#ff8280">SOUTH</span></div></div><span class="pill">DEV · 0.4.1</span></header>
  <nav class="tabs" aria-label="Secciones"><button class="tab active" data-screen="home">🏠 Historia</button><button class="tab" data-screen="fight">🥊 Combate</button><button class="tab" data-screen="gym">🏋️ Gimnasio</button><button class="tab" data-screen="settings">⚙️ Stances</button></nav>
  <main>
   <section class="screen active" id="screen-home"><div class="premium-splash" role="img" aria-label="Ilustración conceptual de dos competidores de pulsos frente a frente"><span class="premium-splash-copy">DOS HEMISFERIOS · UN CAMPEÓN</span></div><div id="character-select"><div class="micro">MODO HISTORIA</div><h1 class="section-title">Elige tu luchador</h1><p class="sub">Uno de estos cuatro personajes será tu protagonista. Su país determina el hemisferio. Podrás mejorar todas sus habilidades durante la carrera.</p><div class="char-list" id="characters"></div><div class="panel" style="margin-top:12px"><div class="row"><b id="selected-title">Álex Rivas</b><span class="tiny">ESTADÍSTICAS INICIALES</span></div><div id="preview-stats"></div></div><button class="btn full" id="choose-character">EMPEZAR MI HISTORIA →</button></div>
   <div id="home-hub" class="hide"><div class="micro">TEMPORADA 1 · ASCENSO REGIONAL</div><h1 class="section-title">Camino al título 🏆</h1><div class="panel"><div class="row"><div><span class="micro" id="home-faction">NORTH</span><h2 style="margin:5px 0 3px" id="home-name"></h2><div class="tiny" id="home-origin"></div></div><span style="font-size:64px" id="home-avatar">🥊</span></div><div style="margin-top:15px" id="home-stats"></div></div><div class="panel"><div class="row"><div><div class="micro">PRÓXIMO RIVAL</div><h3 style="margin:6px 0" id="home-rival">Rafael Costa</h3><div class="tiny" id="home-rival-origin">Brasil · SOUTH</div></div><div style="font-size:43px">🏟️</div></div><p class="sub" style="margin:11px 0">Demuestra tu fuerza, administra tu energía y aprovecha las oportunidades técnicas para vencer.</p><button class="btn full" id="home-fight">COMENZAR COMBATE</button></div><div class="row" style="gap:8px"><button class="btn secondary full" id="home-gym">🏋️ Entrenar</button><button class="btn secondary full" id="home-settings">⚙️ Ajustar stances</button></div><p class="footer">Progreso guardado en este navegador. Personajes ficticios y atributos provisionales.</p></div></section>
-  <section class="screen" id="screen-fight"><div class="match-toolbar"><button class="btn ghost small" id="fight-exit">← Salir del combate</button><span class="micro">PRUEBA DE COMBATE</span></div><div class="fight-head"><div class="fighter-card fighter-card-north"><div class="fighter-country" id="your-country"></div><div class="fighter-name" id="your-name"></div><div class="tiny" id="your-power"></div></div><div class="round-box">MEJOR DE 3<div id="round-dots">◯ ◯ ◯</div><div id="round-name">RONDA 1</div></div><div class="rival fighter-card fighter-card-south"><div class="fighter-country red" id="opp-country"></div><div class="fighter-name" id="opp-name"></div><div class="tiny" id="opp-power"></div></div></div><button class="btn full" id="fight-start" style="margin-bottom:9px">COMENZAR COMBATE</button><button class="btn ghost small" id="pose-demo" style="margin-bottom:9px">▶ Ver PIN a ambos lados</button><div class="arena premium-arena"><canvas id="arena3d" width="760" height="570" aria-label="Prueba interna de rig articulado, solo modo desarrollador"></canvas><canvas id="arena" width="760" height="570" aria-label="Ilustración premium del combate; el dominio se refleja en los indicadores"></canvas><span class="canvas-title">NORTH <span style="color:#f9c977">vs</span> SOUTH</span><span class="canvas-right" id="arena-status">READY · GO!</span><span class="arena-premium-label">ARTE PREMIUM · ESCENA ESTÁTICA</span></div><div class="dominance"><div class="dom-label"><span class="dom-percent blue" id="my-dom">50%</span><span class="micro">DOMINIO</span><span class="dom-percent red" id="ai-dom">50%</span></div><div class="dom-track"><div id="dom-bar" class="dom-left"></div><div class="dom-right"></div><div class="dom-mid"></div></div><div class="tickrow"><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span></div></div><div class="res-grid"><div><div class="row tiny"><span>TU ENERGÍA</span><b id="my-energy-label">100%</b></div><div class="meter green"><div class="fill" id="my-energy-bar" style="width:100%"></div></div></div><div><div class="row tiny"><span>ENERGÍA RIVAL</span><b id="ai-energy-label">100%</b></div><div class="meter red"><div class="fill" id="ai-energy-bar" style="width:100%"></div></div></div></div><div class="skill-row"><span style="font-size:24px" id="skill-symbol">✦</span><div class="skill-gauge"><div class="row"><span class="skill-name" id="skill-name">TÉCNICA · HOOK</span><span class="tiny" id="skill-charge">30%</span></div><div class="meter gold" style="margin-top:6px"><div class="fill" id="skill-bar" style="width:30%"></div></div></div><button id="tech-trigger" class="btn small secondary" disabled>Preparando</button></div><div class="control-zone" id="fight-zone"><span class="controls-title">ALTERNA PARA EJERCER FUERZA</span><span class="controls-stance" id="fight-stance">THUMBS</span><button class="tap-button" data-side="L" aria-label="Botón izquierdo">L</button><button class="tap-button" data-side="R" aria-label="Botón derecho">R</button></div><div class="control-hint" id="fight-feedback">Pulsa comenzar para iniciar la ronda</div><div class="info-pills"><span class="info-pill">⚡ Ritmo: <b id="pps">0.0</b>/s</span><span class="info-pill">🔁 Alternancias: <b id="tap-count">0</b></span><span class="info-pill">🎯 Técnica opcional</span></div><p class="footer">La fuerza depende de tu ritmo y las estadísticas. Los brazos avanzan continuamente; los hitos del 10% modifican la dificultad.</p></section>
+  <section class="screen" id="screen-fight"><div class="match-toolbar"><button class="btn ghost small" id="fight-exit">← Salir del combate</button><span class="micro">PRUEBA DE COMBATE</span></div><div class="fight-head"><div class="fighter-card fighter-card-north"><div class="fighter-country" id="your-country"></div><div class="fighter-name" id="your-name"></div><div class="tiny" id="your-power"></div></div><div class="round-box">MEJOR DE 3<div id="round-dots">◯ ◯ ◯</div><div id="round-name">RONDA 1</div></div><div class="rival fighter-card fighter-card-south"><div class="fighter-country red" id="opp-country"></div><div class="fighter-name" id="opp-name"></div><div class="tiny" id="opp-power"></div></div></div><button class="btn full" id="fight-start" style="margin-bottom:9px">COMENZAR COMBATE</button><button class="btn ghost small" id="pose-demo" style="margin-bottom:9px">▶ Ver PIN a ambos lados</button><div class="arena premium-arena"><canvas id="arena3d" width="760" height="570" aria-label="Prueba interna de rig articulado, solo modo desarrollador"></canvas><canvas id="arena" width="760" height="570" aria-label="Ilustración premium del combate; el dominio se refleja en los indicadores"></canvas><span class="canvas-title">NORTH <span style="color:#f9c977">vs</span> SOUTH</span><span class="canvas-right" id="arena-status">READY · GO!</span><span class="arena-premium-label">ARTE PREMIUM · ESCENA ESTÁTICA</span></div><div id="pose-scrubber-area" class="pose-scrubber">
+ <div class="row"><b>Ver las posturas de ambos lados</b><span id="pose-preview-value">NORTH 50% · SOUTH 50%</span></div>
+ <input id="pose-scrubber" type="range" min="0" max="100" step="10" value="50" aria-label="Posición visual del combate; 0 gana SOUTH, 100 gana NORTH">
+ <div class="pose-ends"><span>PIN SOUTH</span><span>50/50</span><span>PIN NORTH</span></div>
+ </div><div class="dominance"><div class="dom-label"><span class="dom-percent blue" id="my-dom">50%</span><span class="micro">DOMINIO</span><span class="dom-percent red" id="ai-dom">50%</span></div><div class="dom-track"><div id="dom-bar" class="dom-left"></div><div class="dom-right"></div><div class="dom-mid"></div></div><div class="tickrow"><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span></div></div><div class="res-grid"><div><div class="row tiny"><span>TU ENERGÍA</span><b id="my-energy-label">100%</b></div><div class="meter green"><div class="fill" id="my-energy-bar" style="width:100%"></div></div></div><div><div class="row tiny"><span>ENERGÍA RIVAL</span><b id="ai-energy-label">100%</b></div><div class="meter red"><div class="fill" id="ai-energy-bar" style="width:100%"></div></div></div></div><div class="skill-row"><span style="font-size:24px" id="skill-symbol">✦</span><div class="skill-gauge"><div class="row"><span class="skill-name" id="skill-name">TÉCNICA · HOOK</span><span class="tiny" id="skill-charge">30%</span></div><div class="meter gold" style="margin-top:6px"><div class="fill" id="skill-bar" style="width:30%"></div></div></div><button id="tech-trigger" class="btn small secondary" disabled>Preparando</button></div><div class="control-zone" id="fight-zone"><span class="controls-title">ALTERNA PARA EJERCER FUERZA</span><span class="controls-stance" id="fight-stance">THUMBS</span><button class="tap-button" data-side="L" aria-label="Botón izquierdo">L</button><button class="tap-button" data-side="R" aria-label="Botón derecho">R</button></div><div class="control-hint" id="fight-feedback">Pulsa comenzar para iniciar la ronda</div><div class="info-pills"><span class="info-pill">⚡ Ritmo: <b id="pps">0.0</b>/s</span><span class="info-pill">🔁 Alternancias: <b id="tap-count">0</b></span><span class="info-pill">🎯 Técnica opcional</span></div><p class="footer">La fuerza depende de tu ritmo y las estadísticas. Los brazos avanzan continuamente; los hitos del 10% modifican la dificultad.</p></section>
   <section class="screen" id="screen-gym"><div class="micro">MODO HISTORIA · PROGRESIÓN RPG</div><h1 class="section-title">Tu gimnasio 🏋️</h1><p class="sub">Una sesión por jornada del juego. Entrenar mejora atributos y acumula fatiga. Descansar recupera energía sin esperas reales.</p><div class="panel"><div class="row"><div><div class="micro">JORNADA ACTUAL</div><h2 style="margin:3px 0" id="gym-day">Día 1</h2></div><div style="text-align:right"><span class="micro">FATIGA</span><div id="gym-fatigue-number" style="font-weight:900;font-size:22px">0%</div></div></div><div class="meter gold" style="margin:9px 0 12px"><div class="fill" id="gym-fatigue-meter" style="width:0%"></div></div><div class="row"><span class="tiny" id="gym-summary">Tu personaje está descansado</span><button class="btn ghost small" id="rest">🌙 Descansar</button></div></div><div class="panel" id="gym-stations"><div class="micro">ESTACIONES DE ENTRENAMIENTO</div><div id="station-list"></div></div><div class="panel hide" id="gym-play"><div class="row"><div><div class="micro">ENTRENAMIENTO ACTIVO</div><h2 style="margin:5px 0" id="training-title"></h2></div><button class="btn small ghost" id="gym-cancel">Salir</button></div><div id="gym-minigame" class="training-stage"></div><p class="tiny" id="gym-training-hint" style="margin:10px 0 0"></p></div></section>
   <section class="screen" id="screen-settings"><div class="micro">CONFIGURACIÓN ERGONÓMICA</div><h1 class="section-title">Tus dos stances</h1><p class="sub">Cada perfil guarda el diámetro y la posición de L y R por separado. Arrastra los botones en el editor y prueba cuál te resulta más cómodo.</p><div class="settings-switch"><button class="stance active" data-stance="thumbs">👍 THUMBS<br><small>Con el móvil en manos</small></button><button class="stance" data-stance="tabletop">☝️ TABLETOP<br><small>Móvil apoyado</small></button></div><div class="panel"><div class="row"><b>EDITAR POSICIÓN</b><span class="pill" id="edit-stance-name">THUMBS</span></div><div class="control-zone edit-zone" id="edit-zone"><span class="controls-title">ARRASTRA CADA BOTÓN</span><button class="edit-button" data-side="L" aria-label="Arrastrar botón izquierdo">L</button><button class="edit-button" data-side="R" aria-label="Arrastrar botón derecho">R</button></div><div class="row"><b style="font-size:13px">Diámetros independientes</b><span class="tiny">72–140 px</span></div><div class="slider-row"><label for="size-L">Izquierdo</label><input id="size-L" type="range" min="72" max="140" step="2"><b id="size-val-L">108</b></div><div class="slider-row"><label for="size-R">Derecho</label><input id="size-R" type="range" min="72" max="140" step="2"><b id="size-val-R">108</b></div><div class="row" style="gap:8px;margin-top:14px"><button class="btn secondary full" id="stance-reset">Restaurar este stance</button><button class="btn full" id="stance-save">Guardar ajustes</button></div></div><div class="panel"><b>Prueba rápida</b><p class="sub" style="margin:7px 0">Puedes pulsar L y R aquí para comprobar su separación antes de ir al combate.</p><div class="row"><button class="btn secondary full" id="settings-test-left">L</button><button class="btn secondary full" id="settings-test-right">R</button></div><div class="tiny" style="text-align:center;margin-top:9px" id="settings-test-feedback">0 alternancias correctas</div></div><div class="notice">Los stances son solo ergonómicos: no modifican fuerza, nivel ni ventajas del luchador. La zona de edición evita solapamientos y respeta márgenes de seguridad.</div></section>
  </main><div class="footer">NORTH vs SOUTH · DEV 0.4 · Fotogramas premium · Vista experimental · Sin conexión necesaria · Datos de ejemplo</div>
@@ -123,7 +140,7 @@ const names={strength:'Fuerza',wrist:'Muñeca',technique:'Técnica',endurance:'R
 function statHTML(stats){return Object.entries(names).map(([key,label])=>`<div class="stat-row"><span>${label}</span><div class="meter"><div class="fill" style="width:${stats[key]}%"></div></div><b>${Math.round(stats[key])}</b></div>`).join('')}
 function renderCharacters(){const wrap=$('#characters');wrap.innerHTML=fighters.map(f=>`<button class="char ${state.selected===f.id?'selected':''}" data-char="${f.id}"><span class="flag">${f.flag}</span><div class="avatar">${f.portrait}</div><strong>${f.name}</strong><small>${f.city} · ${f.hemi}<br>${f.desc}</small></button>`).join('');$$('[data-char]').forEach(btn=>btn.onclick=()=>{state.selected=btn.dataset.char;state.stats={...currentFighter().stats};renderCharacters()});$('#selected-title').textContent=currentFighter().name;$('#preview-stats').innerHTML=statHTML(state.stats)}
 function renderHome(){if(!state.started){$('#character-select').classList.remove('hide');$('#home-hub').classList.add('hide');renderCharacters();return}$('#character-select').classList.add('hide');$('#home-hub').classList.remove('hide');const p=currentFighter(),o=opponent();$('#home-name').textContent=p.name;$('#home-faction').textContent=`${p.flag} ${p.hemi}`;$('#home-origin').textContent=p.city;$('#home-avatar').textContent=p.portrait;$('#home-stats').innerHTML=statHTML(state.stats);$('#home-rival').textContent=o.name;$('#home-rival-origin').textContent=`${o.flag} ${o.city} · ${o.hemi}`}
-function openScreen(name){if(state.game?.running&&name!=='fight'){state.game.running=false;state.game.paused=false;$('#fight-feedback').textContent='Ronda interrumpida; puedes comenzar otra'}if(state.training&&name!=='gym')cancelTraining();state.screen=name;document.body.classList.toggle('active-match',name==='fight'&&!!state.game?.running);$$('.screen').forEach(el=>el.classList.toggle('active',el.id==='screen-'+name));$$('.tab').forEach(el=>el.classList.toggle('active',el.dataset.screen===name));if(name==='home')renderHome();if(name==='fight')renderFightInitial();if(name==='gym')renderGym();if(name==='settings')renderSettings();window.scrollTo({top:0,behavior:'instant'})}
+function openScreen(name){if(name!=='fight')poseDemoStart=0;if(state.game?.running&&name!=='fight'){state.game.running=false;state.game.paused=false;$('#fight-feedback').textContent='Ronda interrumpida; puedes comenzar otra'}if(state.training&&name!=='gym')cancelTraining();state.screen=name;document.body.classList.toggle('active-match',name==='fight'&&!!state.game?.running);$$('.screen').forEach(el=>el.classList.toggle('active',el.id==='screen-'+name));$$('.tab').forEach(el=>el.classList.toggle('active',el.dataset.screen===name));if(name==='home')renderHome();if(name==='fight')renderFightInitial();if(name==='gym')renderGym();if(name==='settings')renderSettings();window.scrollTo({top:0,behavior:'instant'})}
 $$('.tab').forEach(b=>b.addEventListener('click',()=>{if(!state.started&&b.dataset.screen!=='home'&&b.dataset.screen!=='settings'){toast('Primero elige tu personaje');return}openScreen(b.dataset.screen)}));
 $('#choose-character').onclick=()=>{state.started=true;save();renderHome();toast(`¡Comienza la historia de ${currentFighter().name}!`)};
 $('#home-fight').onclick=()=>openScreen('fight');$('#home-gym').onclick=()=>openScreen('gym');$('#home-settings').onclick=()=>openScreen('settings');
@@ -137,16 +154,44 @@ for(const side of ['L','R']){$('#size-'+side).addEventListener('input',e=>{const
 $$('#edit-zone .edit-button').forEach(b=>{b.addEventListener('pointerdown',e=>{e.preventDefault();try{b.setPointerCapture(e.pointerId)}catch{}activeDrag={side:b.dataset.side,id:e.pointerId};b.style.zIndex='2'});b.addEventListener('pointermove',e=>{if(!activeDrag||activeDrag.id!==e.pointerId||activeDrag.side!==b.dataset.side)return;e.preventDefault();const z=$('#edit-zone'),r=z.getBoundingClientRect(),p=keepSafe(activeDrag.side,(e.clientX-r.left)/r.width*100,(e.clientY-r.top)/r.height*100,z);if(p){Object.assign(stanceData()[activeDrag.side],p);renderControls()}});const end=()=>{if(activeDrag?.side===b.dataset.side){activeDrag=null;b.style.zIndex='';save()}};b.addEventListener('pointerup',end);b.addEventListener('pointercancel',end)});
 $('#stance-save').onclick=()=>{save();toast('Posiciones guardadas para '+state.stance.toUpperCase())};$('#stance-reset').onclick=()=>{state.stances[state.stance]=JSON.parse(JSON.stringify(defaultStances[state.stance]));save();renderSettings();toast('Stance restaurado')};
 for(const side of ['L','R'])$('#settings-test-'+(side==='L'?'left':'right')).addEventListener('pointerdown',e=>{e.preventDefault();if(side!==state.testLast){state.testLast=side;state.testCount++}$('#settings-test-feedback').textContent=`${state.testCount} alternancias correctas`});
-function renderFightInitial(){if(!state.started)return;const p=currentFighter(),o=opponent();$('#your-country').textContent=`${p.flag} ${p.hemi}`;$('#your-name').textContent=p.name;$('#opp-country').textContent=`${o.flag} ${o.hemi}`;$('#opp-name').textContent=o.short;$('#your-power').textContent=`Potencia ${Math.round(power(state.stats))}`;$('#opp-power').textContent=`Potencia ${Math.round(power(o.stats))}`;if(!state.game||!state.game.running){updateBattleHUD();$('#fight-start').classList.remove('hide');$('#pose-demo').classList.remove('hide');$('#fight-start').textContent=state.game?.result?'OTRO COMBATE':'COMENZAR COMBATE'}renderControls();drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0,scoreMe:0,scoreAI:0})}
+function renderFightInitial(){
+ if(!state.started)return;
+ const p=currentFighter(),o=opponent(),mineNorth=p.hemi==='NORTH';
+ const left=mineNorth?p:o,right=mineNorth?o:p;
+ $('#your-country').textContent=`${left.flag} NORTH ${mineNorth?'· TÚ':'· RIVAL'}`;
+ $('#your-name').textContent=left.name;
+ $('#opp-country').textContent=`${right.flag} SOUTH ${mineNorth?'· RIVAL':'· TÚ'}`;
+ $('#opp-name').textContent=right.short||right.name;
+ $('#your-power').textContent=`Potencia ${Math.round(power(mineNorth?state.stats:o.stats))}`;
+ $('#opp-power').textContent=`Potencia ${Math.round(power(mineNorth?o.stats:state.stats))}`;
+ // DOMINIO and energy sides always correspond to what the picture shows.
+ const labels=$$('.res-grid .row.tiny span');
+ if(labels.length>=2){labels[0].textContent=mineNorth?'TU ENERGÍA · NORTH':'ENERGÍA RIVAL · NORTH';labels[1].textContent=mineNorth?'ENERGÍA RIVAL · SOUTH':'TU ENERGÍA · SOUTH';}
+ if(!state.game||!state.game.running){
+  updateBattleHUD();
+  $('#fight-start').classList.remove('hide');
+  $('#pose-demo').classList.remove('hide');
+  $('#fight-start').textContent=state.game?.result?'OTRO COMBATE':'COMENZAR COMBATE';
+  if(framePreview){poseManual=null;poseDemoStart=performance.now();$('#pose-demo').textContent='⏸ Pausar demostración';}
+ }
+ renderControls();
+ drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0,scoreMe:0,scoreAI:0});
+}
 function freshRound(game){if(nvsRig3d)nvsRig3d.reset(50);Object.assign(game,{pos:50,energy:100,aiEnergy:100,charge:30,techCooldown:0,buff:0,buffTime:0,aiBuff:0,aiBuffTime:0,lastSide:'',lastTap:0,tapTimes:[],taps:0,rate:0,elapsed:0,hitEmergency:false,paused:false,running:true,roundEnded:false,aiTechTime:10+Math.random()*3});$('#fight-feedback').textContent='¡ALTERNAR L ↔ R!';$('#arena-status').textContent='READY · GO!';$('#fight-start').classList.add('hide');$('#pose-demo').classList.add('hide')}
-function beginBattle(){poseDemoStart=0;$('#pose-demo').textContent='▶ Ver PIN a ambos lados';if(!state.started){toast('Selecciona un luchador antes');return}state.game={scoreMe:0,scoreAI:0,round:1,result:null};freshRound(state.game);document.body.classList.add('active-match');window.scrollTo(0,0);updateBattleHUD();toast('¡READY... GO!')}
-$('#fight-start').onclick=beginBattle;$('#pose-demo').onclick=()=>{poseDemoStart=poseDemoStart?0:performance.now();$('#pose-demo').textContent=poseDemoStart?'■ Detener demostración':framePreview?'▶ Ver secuencia NORTH (6 posturas)':'▶ Ver PIN a ambos lados';if(poseDemoStart)$('#fight-feedback').textContent=framePreview?'Demo: NORTH 50% a 100%, sin deformar los brazos':'Prueba de rig: NORTH izquierda, pin rojo; SOUTH derecha, pin azul';};$('#fight-exit').onclick=()=>{poseDemoStart=0;if(state.game?.running){state.game.running=false;state.game.paused=false}document.body.classList.remove('active-match');openScreen('home')};
+function beginBattle(){poseDemoStart=0;poseManual=null;$('#pose-demo').textContent='▶ Ver secuencia completa';if(!state.started){toast('Selecciona un luchador antes');return}state.game={scoreMe:0,scoreAI:0,round:1,result:null};freshRound(state.game);document.body.classList.add('active-match');window.scrollTo(0,0);updateBattleHUD();toast('¡READY... GO!')}
+$('#fight-start').onclick=beginBattle;$('#pose-demo').onclick=()=>{
+ if(state.game?.running)return;
+ if(poseDemoStart){poseDemoStart=0;poseManual=lastPose;$('#pose-demo').textContent='▶ Repetir demostración';$('#fight-feedback').textContent='Demostración pausada: arrastra el control para ver cada postura.';}
+ else {poseManual=null;poseDemoStart=performance.now();$('#pose-demo').textContent='⏸ Pausar demostración';$('#fight-feedback').textContent='Demostración: ambos lados alternan, NORTH y SOUTH.';}
+ drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0});
+};
+$('#fight-exit').onclick=()=>{poseDemoStart=0;if(state.game?.running){state.game.running=false;state.game.paused=false}document.body.classList.remove('active-match');openScreen('home')};
 function playerTap(side,t){const g=state.game;if(state.screen!=='fight'||!g?.running||g.paused||g.roundEnded)return;if(g.lastSide===side){$('#fight-feedback').textContent='Repetiste '+side+': no suma fuerza';return}if(t-g.lastTap<52)return;g.lastSide=side;g.lastTap=t;g.tapTimes.push(t);g.taps++;g.charge=clamp(g.charge+1.75,0,100);$('#fight-feedback').textContent=g.charge>=100?'✦ Técnica lista: puedes activarla':'¡Sigue alternando!';updateBattleHUD()}
 $$('#fight-zone .tap-button').forEach(b=>{b.addEventListener('pointerdown',e=>{if(e.cancelable)e.preventDefault();b.classList.add('down');playerTap(b.dataset.side,now())},{passive:false});['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>b.classList.remove('down')));b.addEventListener('contextmenu',e=>e.preventDefault())});
 function availableTech(g){const emergency=g.pos<=20&&!g.hitEmergency&&g.charge>=50;if(g.pos<=30)return {name:'CONTRAATAQUE',type:'targets',emergency};if(g.pos>=70)return {name:'PRESS',type:'timing',emergency:false};if(g.pos>=60)return {name:'TOPROLL',type:'targets',emergency:false};return {name:'HOOK',type:'timing',emergency:false}}
 function canTechnique(g){return !!(g?.running&&!g.paused&&g.techCooldown<=0&&(g.charge>=100||availableTech(g).emergency))}
 $('#tech-trigger').addEventListener('click',()=>{const g=state.game;if(!canTechnique(g))return;const tech=availableTech(g);g.paused=true;modalData={tech,from:'battle',grade:0};if(tech.emergency)g.hitEmergency=true;openTechnique(tech.type,tech.name)});
-function updateBattleHUD(){const g=state.game;const p=g?.pos??50,e=g?.energy??100,ae=g?.aiEnergy??100,c=g?.charge??30;$('#my-dom').textContent=Math.round(p)+'%';$('#ai-dom').textContent=Math.round(100-p)+'%';$('#dom-bar').style.width=p+'%';$('#my-energy-label').textContent=Math.round(e)+'%';$('#ai-energy-label').textContent=Math.round(ae)+'%';$('#my-energy-bar').style.width=e+'%';$('#ai-energy-bar').style.width=ae+'%';$('#skill-charge').textContent=Math.round(c)+'%';$('#skill-bar').style.width=c+'%';const te=availableTech(g||{pos:50,charge:30,hitEmergency:false});$('#skill-name').textContent='TÉCNICA · '+te.name;const active=canTechnique(g);$('#tech-trigger').disabled=!active;$('#tech-trigger').classList.toggle('ready',active);$('#tech-trigger').classList.toggle('emph',active);$('#tech-trigger').classList.toggle('secondary',!active);$('#tech-trigger').textContent=active?'ACTIVAR':'CARGANDO';$('#pps').textContent=(g?.rate??0).toFixed(1);$('#tap-count').textContent=g?.taps??0;$('#round-name').textContent='RONDA '+(g?.round??1);$('#round-dots').innerHTML=[0,1,2].map(i=>`<span class="score-dot ${i<(g?.scoreMe||0)?'won':i<(g?.scoreAI||0)?'lost':''}"></span>`).join('')}
+function updateBattleHUD(){const g=state.game;const p=g?.pos??50,e=g?.energy??100,ae=g?.aiEnergy??100,c=g?.charge??30;const myNorth=currentFighter().hemi==='NORTH',n=myNorth?p:100-p,energyN=myNorth?e:ae,energyS=myNorth?ae:e;$('#my-dom').textContent=Math.round(n)+'%';$('#ai-dom').textContent=Math.round(100-n)+'%';$('#dom-bar').style.width=n+'%';$('#my-energy-label').textContent=Math.round(energyN)+'%';$('#ai-energy-label').textContent=Math.round(energyS)+'%';$('#my-energy-bar').style.width=energyN+'%';$('#ai-energy-bar').style.width=energyS+'%';$('#skill-charge').textContent=Math.round(c)+'%';$('#skill-bar').style.width=c+'%';const te=availableTech(g||{pos:50,charge:30,hitEmergency:false});$('#skill-name').textContent='TÉCNICA · '+te.name;const active=canTechnique(g);$('#tech-trigger').disabled=!active;$('#tech-trigger').classList.toggle('ready',active);$('#tech-trigger').classList.toggle('emph',active);$('#tech-trigger').classList.toggle('secondary',!active);$('#tech-trigger').textContent=active?'ACTIVAR':'CARGANDO';$('#pps').textContent=(g?.rate??0).toFixed(1);$('#tap-count').textContent=g?.taps??0;$('#round-name').textContent='RONDA '+(g?.round??1);$('#round-dots').innerHTML=[0,1,2].map(i=>`<span class="score-dot ${i<(g?.scoreMe||0)?'won':i<(g?.scoreAI||0)?'lost':''}"></span>`).join('')}
 function battleTick(dt,t){const g=state.game;if(!g?.running||g.paused||g.roundEnded)return;g.elapsed+=dt;g.techCooldown=Math.max(0,g.techCooldown-dt);g.buffTime=Math.max(0,g.buffTime-dt);g.aiBuffTime=Math.max(0,g.aiBuffTime-dt);g.tapTimes=g.tapTimes.filter(x=>t-x<900);const r=g.tapTimes.length/(.9);g.rate+=(clamp(r,0,10)-g.rate)*Math.min(1,dt*6);const o=opponent(),my=state.stats;const aiRate=5.0+.23*Math.sin(g.elapsed*1.45)+.18*Math.sin(g.elapsed*.53);const multMe=(1-.33*(1-g.energy/100)),multAI=(1-.33*(1-g.aiEnergy/100));const startMe=g.elapsed<1.5?1+(my.explosive-45)*.003:1;const startAI=g.elapsed<1.5?1+(o.stats.explosive-45)*.003:1;let forceMe=power(my)*Math.pow(Math.max(0,g.rate)/5,.91)*multMe*startMe*(g.buffTime>0?1+g.buff:1);let forceAI=power(o.stats)*(aiRate/5)*multAI*startAI*(g.aiBuffTime>0?1+g.aiBuff:1);if(g.pos>50)forceMe*=1+.0075*(g.pos-50);if(g.pos<50)forceAI*=1+.0075*(50-g.pos);const diff=forceMe-forceAI;const speed=22*Math.tanh(diff/22);g.pos=clamp(g.pos+speed*dt,0,100);g.energy=clamp(g.energy-(1.05+Math.pow(Math.max(0,g.rate-4),1.5)*.24)*(1.3-state.stats.endurance/250)*dt+(g.rate<2?.30*dt:0),0,100);g.aiEnergy=clamp(g.aiEnergy-(1.05+Math.pow(Math.max(0,aiRate-4),1.5)*.24)*(1.3-o.stats.endurance/250)*dt,0,100);if(g.elapsed>g.aiTechTime&&g.aiBuffTime<=0&&g.aiTechTime<100){g.aiBuff=.055+.001*(o.stats.technique-45);g.aiBuffTime=2.3;g.aiTechTime=1e6;$('#fight-feedback').textContent='¡El rival ejecutó una técnica!'}if(g.pos<=0||g.pos>=100){endRound(g.pos>=100);return}if(g.elapsed>=55){endRound(g.pos>50);return} }
 function endRound(won){const g=state.game;if(!g||g.roundEnded)return;g.roundEnded=true;g.running=false;$('#arena-status').textContent=won?'PIN · ¡GANASTE!':'PIN · DERROTA';setTimeout(()=>{if(state.game!==g||state.screen!=='fight')return;document.body.classList.remove('active-match');if(won)g.scoreMe++;else g.scoreAI++;updateBattleHUD();$('#arena-status').textContent=won?'PIN · ¡GANASTE!':'PIN · DERROTA';$('#fight-feedback').textContent=won?'¡Gran trabajo!': 'Necesitas más presión o mejorar habilidades';modalMode='round';const finished=g.scoreMe>=2||g.scoreAI>=2;const heading=won?'¡RONDA GANADA!':'Ronda perdida';openModal('RESULTADO DE RONDA',heading,`Dominio: ${Math.round(g.pos)} / ${Math.round(100-g.pos)} · Alternancias válidas: ${g.taps}`);$('#modal-content').innerHTML=`<div class="result-lines"><div class="row"><span>Marcador del combate</span><b>${g.scoreMe} — ${g.scoreAI}</b></div><div class="row"><span>Tu energía final</span><b>${Math.round(g.energy)}%</b></div><div class="row"><span>Duración de ronda</span><b>${g.elapsed.toFixed(1)} s</b></div></div>`;$('#modal-close').textContent=finished?'VER RESULTADO':'SIGUIENTE RONDA';$('#modal-close').onclick=()=>{closeModal();if(finished){g.result=g.scoreMe>g.scoreAI?'win':'lose';modalMode='final';openModal('COMBATE FINALIZADO',g.result==='win'?'🏆 ¡VICTORIA!':'💪 ¡REVANCHA!',g.result==='win'?'Has superado al rival. Tu historia continúa.':'Puedes entrenar y volver a intentarlo.');$('#modal-content').innerHTML=`<div class="result-lines"><div class="row"><span>Resultado</span><b>${g.scoreMe} — ${g.scoreAI}</b></div><div class="row"><span>Próximo paso</span><b>Gimnasio o revancha</b></div></div>`;$('#modal-close').textContent='VOLVER A LA HISTORIA';$('#modal-close').onclick=()=>{closeModal();openScreen('home')}}else{g.round++;freshRound(g);document.body.classList.add('active-match');window.scrollTo(0,0);$('#arena-status').textContent='READY · GO!';updateBattleHUD()}}},850)}
 function openModal(kicker,title,desc){$('#modal-kicker').textContent=kicker;$('#modal-heading').textContent=title;$('#modal-desc').textContent=desc;$('#modal-content').innerHTML='';$('#modal-note').textContent='';$('#modal-overlay').classList.add('visible')}
@@ -173,12 +218,12 @@ function roundPath(c,pts){c.beginPath();c.moveTo(pts[0][0],pts[0][1]);for(let i=
    This is an HONEST static illustration, not an articulated 3D render. */
 let poseDemoStart=0;
 const devRig = new URLSearchParams(location.search).get('devRig') === '1';
-const framePreview = !devRig && new URLSearchParams(location.search).get('frames') === '1';
+const framePreview = !devRig; // both directions enabled by default, with no URL parameter
 if(framePreview){
- document.body.classList.add('frame-preview');
+ document.body.classList.add('frame-preview','sprite-mode');
  const arena = document.getElementById('arena');
  arena.width = 724; arena.height = 362;
- document.getElementById('pose-demo').textContent='▶ Ver secuencia NORTH (6 posturas)';
+ document.getElementById('pose-demo').textContent='⏸ Pausar demostración';
 }
 if(devRig) document.body.classList.add('dev-rig');
 const nvsRig3d=devRig?(window.NVSArmRig?.create(document.getElementById('arena3d'))||null):null;
@@ -190,57 +235,91 @@ if(nvsRig3d){
 }else if(nvsRig2d){
  document.querySelector('.arena-premium-label').textContent='PRUEBA TÉCNICA · ESQUELETO 2D';
 }else{
- document.querySelector('.arena-premium-label').textContent='ARTE PREMIUM · ANIMACIÓN EN DESARROLLO';
+ document.querySelector('.arena-premium-label').textContent='FRAMES PREMIUM · NORTH Y SOUTH';
 }
-/* DEV 0.4 experimental: six approved visual frames NORTH 50..100.
-   SOUTH has not passed geometry review: display neutral frame, not a false victory. */
-const premiumFrameSheet=new Image();
-premiumFrameSheet.decoding='async';
-premiumFrameSheet.onload=()=>{if(state.screen==='fight')drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0})};
-premiumFrameSheet.onerror=()=>console.warn('NVS: falló la carga del atlas; se conserva la escena premium');
-if(framePreview){
- premiumFrameSheet.src='assets/frames-north-v04.webp?v=040-1';
- document.querySelector('.arena-premium-label').textContent='NORTH · 6 FRAMES · BETA';
+/* DEV 0.4.1 — two 6-pose photographic atlases, fixed FOUR-PAD table.
+ * Physics g.pos = YOUR dominance. Image composition always NORTH left/SOUTH right.
+ * Never stretch, shear or mirror the photographed athletes. */
+let poseManual=null, lastPose=50;
+const northAtlas=new Image(), southAtlas=new Image();
+for(const [name,img,url] of [
+ ['NORTH',northAtlas,'assets/frames-north-v04.webp?v=041'],
+ ['SOUTH',southAtlas,'assets/frames-south-v041.webp?v=041']
+]){
+ img.decoding='async';
+ img.onload=()=>{console.info('NVS: '+name+' atlas loaded',img.naturalWidth,img.naturalHeight);if(state.screen==='fight')drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0})};
+ img.onerror=()=>{console.error('NVS: '+name+' atlas failed '+url);document.querySelector('.arena-premium-label').textContent='ERROR AL CARGAR FRAMES '+name};
+ img.src=url;
 }
+const validAtlas=img=>img.complete&&img.naturalWidth===2172&&img.naturalHeight===724;
+const northDom=g=>currentFighter().hemi==='NORTH'?Number(g.pos??50):100-Number(g.pos??50);
+function frameForDominance(northPercent){
+ const n=Math.max(0,Math.min(100,Number(northPercent)));
+ return {side:n>=50?'NORTH':'SOUTH',frame:Math.min(5,Math.max(0,Math.round(Math.abs(n-50)/10))),north:n};
+}
+
+function drawPoseHud(p){
+ const n=Math.round(Math.max(0,Math.min(100,p)));
+ document.getElementById('pose-preview-value').textContent=`NORTH ${n}% · SOUTH ${100-n}%`;
+ document.getElementById('pose-scrubber').value=String(Math.round(n/10)*10);
+}
+$('#pose-scrubber').addEventListener('input',e=>{
+ if(state.game?.running)return;
+ poseDemoStart=0;
+ poseManual=Math.max(0,Math.min(100,Number(e.target.value)));
+ lastPose=poseManual;
+ $('#pose-demo').textContent='▶ Repetir demostración';
+ drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0});
+});
 const premiumArenaArt=new Image();
 premiumArenaArt.decoding='async';
 premiumArenaArt.src='assets/arena-duel.webp?v=031-premium';
 premiumArenaArt.onload=()=>{if(state.screen==='fight')drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0})};
 function drawArena(g){
- if(poseDemoStart&&(devRig||framePreview)&&!g.running){const sec=(performance.now()-poseDemoStart)/1000;g={...g,pos:framePreview?50+50*Math.abs(Math.sin(sec*.72)):50+50*Math.sin(sec*.94),energy:75,aiEnergy:75};}
  if(nvsRig3d){nvsRig3d.render(g.pos??50,g.elapsed??0,g.energy??100,g.aiEnergy??100,!!g.running&&!g.paused&&!g.roundEnded);return;}
  if(nvsRig2d){nvsRig2d.render(g.pos??50,g.elapsed??0,g.energy??100,g.aiEnergy??100);return;}
  const canvas=document.getElementById('arena'),ctx=canvas.getContext('2d');
  if(!ctx)return;
  const W=canvas.width,H=canvas.height;
+ let n=northDom(g);
+ const inPreview=framePreview&&!g.running;
+ if(inPreview&&poseDemoStart){
+  const elapsed=(performance.now()-poseDemoStart)/1000;
+  // Two directions: begin at center, NORTH wins (right), back through center, SOUTH wins (left).
+  n=50+50*Math.sin(elapsed*.83);
+ } else if(inPreview&&poseManual!==null){n=poseManual;}
+ n=Math.max(0,Math.min(100,n));
+ lastPose=n;
  ctx.clearRect(0,0,W,H);
- if(framePreview && currentFighter().hemi==='NORTH' && premiumFrameSheet.complete && premiumFrameSheet.naturalWidth===2172 && premiumFrameSheet.naturalHeight===724){
-  // 3 columns x 2 rows, no skeletal morphing or photo warping.
-  const p=Math.max(0,Math.min(100,Number(g.pos??50)));
-  const frame=p<50?0:Math.min(5,Math.max(0,Math.round((p-50)/10)));
-  ctx.drawImage(premiumFrameSheet,(frame%3)*724,Math.floor(frame/3)*362,724,362,0,0,W,H);
-  if(p<50){
-   ctx.fillStyle='#06111bc9';ctx.fillRect(0,H-37,W,37);
-   ctx.font='bold 14px system-ui';ctx.textAlign='center';ctx.fillStyle='#f5c29c';
-   ctx.fillText('SOUTH: secuencia pendiente de validación',W/2,H-13);
+ if(framePreview){
+  const pose=frameForDominance(n);
+  const isNorth=pose.side==='NORTH';
+  const sheet=isNorth?northAtlas:southAtlas;
+  if(validAtlas(sheet)){
+   const frame=pose.frame;
+   ctx.drawImage(sheet,(frame%3)*724,Math.floor(frame/3)*362,724,362,0,0,W,H);
+   if(inPreview){
+    drawPoseHud(n);
+    $('#my-dom').textContent=Math.round(n)+'%';
+    $('#ai-dom').textContent=Math.round(100-n)+'%';
+    $('#dom-bar').style.width=n+'%';
+   }
+   const status=isNorth?'NORTH AVANZA':'SOUTH AVANZA';
+   document.querySelector('.arena-premium-label').textContent=`FOTOGRAMA ${frame+1}/6 · ${status}`;
+   return;
   }
-  return;
+  document.querySelector('.arena-premium-label').textContent='CARGANDO FRAMES · NORTH Y SOUTH';
  }
  if(premiumArenaArt.complete&&premiumArenaArt.naturalWidth){
-  // Fixed, undistorted scene. No fake moving hand/circle/skeletal overlay.
   const sw=premiumArenaArt.naturalWidth,sh=premiumArenaArt.naturalHeight;
   const scale=Math.max(W/sw,H/sh),dw=sw*scale,dh=sh*scale;
   ctx.drawImage(premiumArenaArt,(W-dw)/2,(H-dh)/2,dw,dh);
-  // Shallow cinematic vignette only; the DOM bar carries the actual gameplay position.
-  const shade=ctx.createLinearGradient(0,0,0,H);
-  shade.addColorStop(0,'rgba(5,13,25,.08)');shade.addColorStop(.75,'rgba(5,13,25,0)');shade.addColorStop(1,'rgba(5,13,25,.3)');
-  ctx.fillStyle=shade;ctx.fillRect(0,0,W,H);
  }else{
   ctx.fillStyle='#0a1729';ctx.fillRect(0,0,W,H);
   ctx.textAlign='center';ctx.fillStyle='#d7e6fb';ctx.font='20px system-ui';ctx.fillText('Cargando escena premium…',W/2,H/2);
  }
 }
-function mainLoop(t){const dt=Math.min(.045,(t-lastFrame)/1000||0);lastFrame=t;if(state.screen==='fight')battleTick(dt,t);trainingTick(t);techniqueTick(t);if(state.screen==='fight'&&nvsRig3d)drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0});if(t-lastPaint>65){if(state.screen==='fight'){updateBattleHUD();if(!nvsRig3d)drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0})}lastPaint=t}requestAnimationFrame(mainLoop)}
+function mainLoop(t){const dt=Math.min(.045,(t-lastFrame)/1000||0);lastFrame=t;if(state.screen==='fight')battleTick(dt,t);trainingTick(t);techniqueTick(t);if(state.screen==='fight'&&(nvsRig3d||framePreview))drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0});if(t-lastPaint>65){if(state.screen==='fight'){updateBattleHUD();if(!nvsRig3d&&!framePreview)drawArena(state.game||{pos:50,energy:100,aiEnergy:100,elapsed:0})}lastPaint=t}requestAnimationFrame(mainLoop)}
 window.addEventListener('resize',renderControls);window.addEventListener('orientationchange',()=>setTimeout(renderControls,120));document.addEventListener('contextmenu',e=>{if(e.target.closest('.control-zone,.training-stage,.target-field'))e.preventDefault()});document.addEventListener('selectstart',e=>{if(e.target.closest('.control-zone,.training-stage,.target-field'))e.preventDefault()});
 renderHome();renderControls();requestAnimationFrame(mainLoop);
 </script>
