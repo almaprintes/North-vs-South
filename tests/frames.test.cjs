@@ -26,14 +26,19 @@ for(const side of ['north-v04','south-v041']){
  // RIFF/WEBP header check
  assert(b.toString('latin1',8,12)==='WEBP','WEBP signature '+side);
 }
-console.log('PASS: 101 positions, both sides, default autoplay, scrubber and atlases');
+console.log('PASS: 101 positions, both sides, manual scrubber and atlases');
 
 
 // Exercise the actual Canvas renderer with stubbed DOM (without a graphical browser).
 const frameFn=source.match(/function drawArena\(g\)\{[\s\S]*?\n\}/);
 const northFn=source.match(/const northDom=g=>[^;]+;/);
-const previewFn=source.match(/function frameForPreview[(]n,side[)][{][\\s\\S]*?\\n[}]/);
-const demoFn=source.match(/function demoPosition[(]t,side[)][{][\\s\\S]*?\\n[}]/);
+function extractFunc(name){
+ const start=source.indexOf('function '+name+'('),end=source.indexOf('\n}',start);
+ assert(start>=0&&end>start,'function '+name+' present');
+ return source.slice(start,end+2);
+}
+const previewFn=[extractFunc('frameForPreview')];
+const demoFn=[extractFunc('demoPosition')];
 assert(previewFn&&demoFn,'one-way demo functions');
 const isolation={};vm.createContext(isolation);
 vm.runInContext(previewFn[0]+demoFn[0]+';globalThis.preview=frameForPreview;globalThis.demo=demoPosition;',isolation);
