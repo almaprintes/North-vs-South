@@ -25,3 +25,10 @@ jobs:
           print('HTML and prototype markers: OK')
           PYCODE
           node --check /tmp/nvs-app.js
+
+      - name: Verify rig and PIN geometry
+        shell: bash
+        run: |
+          node --check rig3d.js
+          node --check rig2d.js
+          node tests/rig.test.cjs
