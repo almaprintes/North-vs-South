@@ -24,3 +24,37 @@ for(const side of ['north-v04','south-v041']){
  assert(b.toString('latin1',8,12)==='WEBP','WEBP signature '+side);
 }
 console.log('PASS: 101 positions, both sides, default autoplay, scrubber and atlases');
+
+
+// Exercise the actual Canvas renderer with stubbed DOM (without a graphical browser).
+const frameFn=source.match(/function drawArena\(g\)\{[\s\S]*?\n\}/);
+const northFn=source.match(/const northDom=g=>[^;]+;/);
+assert(frameFn&&northFn,"Renderer and orientation mapping exist");
+const paint=[];
+const canvas={width:724,height:362,getContext(){return {clearRect(){},drawImage(...a){paint.push(a)},fillRect(){},fillText(){},createLinearGradient(){return {addColorStop(){}}}}}};
+const label={textContent:''};
+const ctx2={
+  nvsRig3d:null,nvsRig2d:null,framePreview:true,poseDemoStart:0,poseManual:null,lastPose:50,
+  premiumArenaArt:{complete:false,naturalWidth:0,naturalHeight:0},
+  northAtlas:{complete:true,naturalWidth:2172,naturalHeight:724,which:'NORTH'},
+  southAtlas:{complete:true,naturalWidth:2172,naturalHeight:724,which:'SOUTH'},
+  document:{getElementById(){return canvas},querySelector(){return label}},
+  drawPoseHud(){},$(){return {textContent:'',style:{}}},
+  performance:{now(){return 2000}},currentFighter(){return {hemi:ctx2.testHemi}},
+  testHemi:'NORTH',console,
+  validAtlas(img){return img.complete&&img.naturalWidth===2172&&img.naturalHeight===724}
+};
+vm.createContext(ctx2);
+vm.runInContext(northFn[0]+m[0]+frameFn[0]+';globalThis.runActualDraw=drawArena;',ctx2);
+function drawn(hemi,pct){
+  paint.length=0;ctx2.testHemi=hemi;
+  ctx2.runActualDraw({pos:pct,running:true,elapsed:1,energy:70,aiEnergy:80});
+  assert.equal(paint.length,1,`one sprite at ${hemi} ${pct}`);
+  return {side:paint[0][0].which,sx:paint[0][1],sy:paint[0][2]};
+}
+assert.deepEqual(drawn('NORTH',0),{side:'SOUTH',sx:1448,sy:362});
+assert.deepEqual(drawn('NORTH',50),{side:'NORTH',sx:0,sy:0});
+assert.deepEqual(drawn('NORTH',100),{side:'NORTH',sx:1448,sy:362});
+assert.deepEqual(drawn('SOUTH',0),{side:'NORTH',sx:1448,sy:362});
+assert.deepEqual(drawn('SOUTH',100),{side:'SOUTH',sx:1448,sy:362});
+console.log('PASS: actual renderer chooses the correct image/pose for both player hemispheres');
