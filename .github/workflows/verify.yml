@@ -32,3 +32,18 @@ jobs:
           node --check rig3d.js
           node --check rig2d.js
           node tests/rig.test.cjs
+
+      - name: Check premium frame atlas
+        shell: bash
+        run: |
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          atlas=Path('assets/frames-north-v04.webp')
+          assert atlas.is_file() and atlas.stat().st_size > 50000
+          assert atlas.read_bytes()[:4] == b'RIFF'
+          html=Path('index.html').read_text(encoding='utf-8')
+          assert "frames-north-v04.webp" in html
+          assert "SOUTH: secuencia pendiente de validación" in html
+          assert "framePreview && currentFighter().hemi==='NORTH'" in html
+          print('Experimental frame atlas present; opposite-side misuse guarded.')
+          PYCODE
