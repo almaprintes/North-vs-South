@@ -73,3 +73,12 @@ DEV 0.1 es una maqueta funcional; los personajes 3D y el equilibrio definitivo d
 ### Limitaciones actuales
 
 Este es un **rig 3D funcional y estilizado**, no personajes humanos de calidad cinematográfica con piel y expresión fotorrealistas. El objetivo de este paso es **corregir la anatomía y la mecánica visual** antes de producir modelos y texturas premium. Los luchadores siguen siendo modelos genéricos, no avatares únicos de la historia.
+
+
+## DEV 0.3.1 — Corrección visual prioritaria (23/11/2026)
+
+- Ilustración premium restaurada como vista principal; el rig WebGL low-poly ya no es la experiencia predeterminada.
+- La imagen de los luchadores es **estática**. No se muestra como si fuera una animación ni se añade un círculo artificial sobre las manos. Indicadores, técnicas y controles siguen siendo interactivos.
+- El prototipo de rig solo se muestra bajo `?devRig=1`, para pruebas de geometría y PIN.
+- Próximo objetivo gráfico: personajes de alta fidelidad riggeados, con huesos e IK, anatomía correcta y animaciones que terminen al contacto con la almohadilla.
+- Pendiente: verificar el renderizado en Safari real y el estado del despliegue de GitHub Pages.
