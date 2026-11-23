@@ -40,9 +40,11 @@ DEV 0.1 es una maqueta funcional; los personajes 3D y el equilibrio definitivo d
 - Añadir sistemas de cámara, IK y animaciones 3D.
 - Incorporar modo historia, ciudades y torneos NORTH vs SOUTH.
 
-## DEV 0.1.1 · Primera revisión de ergonomía
+## DEV 0.2 · Pack premium de arte (2026-11-23)
 
-- Pantalla de combate adaptada a móviles de menor altura (hasta 375 × 667 CSS px en las pruebas).
-- Se prioriza mantener ambos botones L/R visibles y accesibles sin desplazamiento vertical durante la ronda.
-- En pantallas cortas se ocultan indicadores secundarios y se reduce la arena sin cambiar las físicas ni estadísticas.
-- La validación es de navegador móvil simulado; queda pendiente la prueba táctil real en iPhone y la confirmación externa de GitHub Pages y Actions.
+- 7 imágenes WebP locales en `assets/`: escena de combate, dos retratos conceptuales, logotipo, botones azul/rojo y splash del menú. Tamaño total ≈191 KB.
+- La escena se renderiza sobre el canvas sustituyendo la ilustración de personajes procedimental; incluye halo dinámico de fuerza y posición.
+- Las barras de energía, dominio, técnica, controles L/R, stances y minijuegos siguen siendo DOM interactivo.
+- Si falla la carga del arte, se mantiene el dibujo procedural 2D previo como reserva.
+- Los personajes de la escena son **arte conceptual fijo**, no avatares individuales del luchador seleccionado ni rig 3D articulado. Las expresiones y posturas fotográficas no están animadas aún.
+- Pendiente: pruebas en dispositivos reales, sprites por personaje, rig/IK y animación de brazos, optimización visual final.
