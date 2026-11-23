@@ -57,3 +57,19 @@ DEV 0.1 es una maqueta funcional; los personajes 3D y el equilibrio definitivo d
 - La animación es una solución **2D provisional**: no hay rig 3D, cambios faciales independientes ni pin anatómicamente exacto. El próximo paso gráfico es construir sprites separados/rig IK real.
 - Si falla la carga del atlas, se emplea la animación vectorial anterior, no la ilustración estática.
 - Pendiente: comprobar Safari/iPhone real y comportamiento de Pages.
+
+
+## DEV 0.3 — Rig articulado para el combate
+
+- La escena principal usa WebGL2 nativo: **dos personajes 3D estilizados**, mesa, almohadillas de codo, almohadillas de pin y agarres. No requiere bibliotecas externas.
+- Los brazos enfrentados tienen huesos rígidos, con **longitud invariable** en el antebrazo (0,975) y brazo superior (1,06). Los codos se desplazan dentro de sus propias almohadillas y las manos permanecen agarradas.
+- La mano libre de cada competidor sujeta **exclusivamente el agarre de su lado**.
+- **50/50:** manos verticales; **100/0:** gana el jugador izquierdo y toca la almohadilla de pin de la derecha (roja); **0/100:** gana el rival derecho y toca la almohadilla izquierda (azul). No hay saltos entre tramos.
+- Tras un PIN, se muestran 850 ms del agarre en contacto con la almohadilla antes del resultado.
+- Si el navegador no admite WebGL2, entra una **animación 2D articulada con la misma geometría**. No se usa la antigua animación que deformaba una fotografía.
+- **Validación automática:** `node tests/rig.test.cjs` verifica 101 posiciones, longitudes, apoyos y dirección del PIN.
+- **Comprobación manual pendiente:** calidad, velocidad y tacto en el iPhone real; el navegador de QA automatizado actualmente tiene WebGL bloqueado, así que el renderizado 3D no está validado visualmente allí.
+
+### Limitaciones actuales
+
+Este es un **rig 3D funcional y estilizado**, no personajes humanos de calidad cinematográfica con piel y expresión fotorrealistas. El objetivo de este paso es **corregir la anatomía y la mecánica visual** antes de producir modelos y texturas premium. Los luchadores siguen siendo modelos genéricos, no avatares únicos de la historia.
