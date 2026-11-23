@@ -27,6 +27,13 @@ Verificar el workflow/deploy verde antes de declarar Pages publicado; no afirmar
 
 La deformación de fotografías/sprites se sustituye por `rig3d.js` (WebGL2, esqueleto procedural con segmentos rígidos y geometría 3D) y `rig2d.js` (reserva articulada sin deformar fotografías). `index.html` conserva físicas, técnicas, entrenamientos y stances. El protagonista es siempre el competidor de la izquierda; `pos=100` representa PIN en la almohadilla derecha roja, `pos=0` PIN en la almohadilla izquierda azul. Longitudes rígidas y apoyo de codos verificados en 101 posiciones mediante `tests/rig.test.cjs`. El PIN permanece en pantalla 850 ms antes del resultado. **Pendiente:** pruebas visuales reales WebGL2 en Safari/iPhone; no presentar estos personajes estilizados como render cinematográfico definitivo.
 
+### Rectificación DEV 0.3.1 (23/11/2026)
 
-### Corrección DEV 0.3.1 — 23/11/2026
-El usuario rechazó la sustitución de las ilustraciones premium por muñecos low-poly. Se restaura el arte premium por defecto y se oculta el rig básico tras `?devRig=1`. El arte actual es estático: no afirmar que ya existe animación de personajes de calidad. Conservar físicas y stances. Para la siguiente fase, priorizar rig y texturas de alta fidelidad con animación de PIN anatómicamente correcta.
+Feedback directo del usuario: el rig low-poly reemplazó el arte premium por muñecos visualmente inaceptables. Se restaura la ilustración premium como opción predeterminada, sin falsa animación. `?devRig=1` activa el rig técnico para especialistas. Mantener siempre prioridad de calidad artística y realismo anatómico; no volver a poner low-poly como diseño final. Próxima tarea sustancial: personajes 3D de alta fidelidad con articulaciones IK auténticas y manos libres en sus agarres.
+
+
+DEV 0.4: Vista experimental `?frames=1` con 6 poses NORTH 50-100. Atlas `assets/frames-north-v04.webp`. SOUTH aún no validado; no mostrar imágenes antiguas con pin en apoyo de codo. La vista normal sigue DEV 0.3.1. Mantener ambas posibilidades y completar 0-49 antes de hacerla default.
+
+
+## DEV 0.4.1 (23/11/2026)
+La queja de ausencia de movimiento tenía 3 causas: la reproducción estaba oculta tras `?frames=1`, las imágenes NORTH solo se usaban con personajes NORTH y la demostración requería pulsar su botón. Corregido: dos atlas 6 frames, activación por defecto, demostración automática al entrar en Combate y barra para scrub manual, sin alterar físicas/stats/stances. `preview.html` usa GIF nativo, siempre animado. Corregido `northDom` cuando el usuario es SOUTH. Pendiente comprobar Safari/iPhone y geometría del fotograma PIN extremo SOUTH (no declarar 100% validado). No sustituir los assets premium por low-poly.
