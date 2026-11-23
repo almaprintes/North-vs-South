@@ -16,6 +16,9 @@ assert(source.includes("poseDemoStart=performance.now()"),'auto demonstration');
 assert(source.includes("frames-south-v041.webp"),'south atlas');
 assert(source.includes("frames-north-v04.webp"),'north atlas');
 assert(source.includes("pose-scrubber"),'manual scrubber');
+assert(!source.includes("50+50*Math.sin(elapsed*.83)"),'no bouncing between unrelated atlases');
+assert(source.includes("selectPoseDirection(mineNorth?'NORTH':'SOUTH')"),'enter preview stopped');
+assert(source.includes("frameForPreview(n,demoDirection)"),'isolated demo uses selected side');
 for(const side of ['north-v04','south-v041']){
  const file=require('path').join(__dirname,`../assets/frames-${side}.webp`);
  const b=fs.readFileSync(file);
@@ -23,18 +26,38 @@ for(const side of ['north-v04','south-v041']){
  // RIFF/WEBP header check
  assert(b.toString('latin1',8,12)==='WEBP','WEBP signature '+side);
 }
-console.log('PASS: 101 positions, both sides, default autoplay, scrubber and atlases');
+console.log('PASS: 101 positions, both sides, manual scrubber and atlases');
 
 
 // Exercise the actual Canvas renderer with stubbed DOM (without a graphical browser).
 const frameFn=source.match(/function drawArena\(g\)\{[\s\S]*?\n\}/);
 const northFn=source.match(/const northDom=g=>[^;]+;/);
+function extractFunc(name){
+ const start=source.indexOf('function '+name+'('),end=source.indexOf('\n}',start);
+ assert(start>=0&&end>start,'function '+name+' present');
+ return source.slice(start,end+2);
+}
+const previewFn=[extractFunc('frameForPreview')];
+const demoFn=[extractFunc('demoPosition')];
+assert(previewFn&&demoFn,'one-way demo functions');
+const isolation={demoDurationSeconds:3.8};vm.createContext(isolation);
+vm.runInContext(previewFn[0]+demoFn[0]+';globalThis.preview=frameForPreview;globalThis.demo=demoPosition;',isolation);
+for(const side of ['NORTH','SOUTH']){
+ for(let sec=0;sec<=38;sec++){
+  const n=isolation.demo(sec/10,side);
+  const q=isolation.preview(n,side);
+  assert.equal(q.side,side,'never change atlas during one demo');
+  assert(side==='NORTH'?n>=50&&n<=100:n<=50&&n>=0,'direction bounds');
+ }
+ assert.equal(isolation.preview(50,side).frame,0,'neutral frame');
+ assert.equal(isolation.preview(side==='NORTH'?100:0,side).frame,5,'pin frame');
+}
 assert(frameFn&&northFn,"Renderer and orientation mapping exist");
 const paint=[];
 const canvas={width:724,height:362,getContext(){return {clearRect(){},drawImage(...a){paint.push(a)},fillRect(){},fillText(){},createLinearGradient(){return {addColorStop(){}}}}}};
 const label={textContent:''};
 const ctx2={
-  nvsRig3d:null,nvsRig2d:null,framePreview:true,poseDemoStart:0,poseManual:null,lastPose:50,
+  nvsRig3d:null,nvsRig2d:null,framePreview:true,poseDemoStart:0,poseManual:50,lastPose:50,demoDirection:'NORTH',frameForPreview:isolation.preview,demoPosition:isolation.demo,
   premiumArenaArt:{complete:false,naturalWidth:0,naturalHeight:0},
   northAtlas:{complete:true,naturalWidth:2172,naturalHeight:724,which:'NORTH'},
   southAtlas:{complete:true,naturalWidth:2172,naturalHeight:724,which:'SOUTH'},
@@ -58,3 +81,10 @@ assert.deepEqual(drawn('NORTH',100),{side:'NORTH',sx:1448,sy:362});
 assert.deepEqual(drawn('SOUTH',0),{side:'NORTH',sx:1448,sy:362});
 assert.deepEqual(drawn('SOUTH',100),{side:'SOUTH',sx:1448,sy:362});
 console.log('PASS: actual renderer chooses the correct image/pose for both player hemispheres');
+for(const side of ['NORTH','SOUTH']){
+ paint.length=0;ctx2.demoDirection=side;ctx2.poseManual=side==='NORTH'?100:0;
+ ctx2.runActualDraw({pos:50,running:false,elapsed:0});
+ assert.equal(paint.length,1,'preview draws one image');
+ assert.equal(paint[0][0].which,side,'preview uses only requested side');
+}
+console.log('PASS: isolated direction playback, no image overlay');

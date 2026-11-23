@@ -123,3 +123,6 @@ Este es un **rig 3D funcional y estilizado**, no personajes humanos de calidad c
 - Página de prueba sin JavaScript: [`preview.html`](preview.html), con GIF de dos sentidos.
 - **Limitación:** seis posturas por hemisferio, no diez. El PIN final de SOUTH necesita una revisión adicional de la almohadilla; esto no es una animación anatómica definitiva. Los actores de este arte son ilustrativos, no los modelos personalizados de la historia.
 - Pruebas automáticas del mapeo 0..100 y sintaxis; pendiente validar Safari real y Pages en el dispositivo.
+
+## DEV 0.4.3 — Vista previa de una dirección (23/11/2026)
+La demostración ya no alterna atlas incompatibles: se elige Gana azul o Gana rojo; el deslizador se limita al lado seleccionado y la reproducción termina en el PIN sin saltar a la otra animación. `preview.html` sustituye el GIF combinado por una prueba controlada. **Los atlas originales no se han cambiado.** Esto elimina la mezcla en la demo, pero NO resuelve la anatomía del PIN azul ni el cambio de atlas en pleno combate real; queda pendiente un único arte coherente y verificación en iPhone.
