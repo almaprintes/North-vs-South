@@ -1,14 +1,12 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NORTH vs SOUTH · Animación de prueba 0.4.1</title><style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#070e1d;color:#f0f6ff;font-family:system-ui,-apple-system,sans-serif}
-main{max-width:760px;margin:0 auto;padding:25px 15px;text-align:center}h1{font-size:24px;margin:4px 0 8px}
-.subtitle{color:#9bc7e5;font-size:14px;line-height:1.5}
-img{width:100%;height:auto;display:block;border:1px solid #46769e;border-radius:12px;box-shadow:0 10px 25px #0008;margin:18px auto}
-a{display:inline-block;padding:13px 25px;border-radius:10px;background:#196bba;color:white;text-decoration:none;font-weight:800}
-.note{margin:18px auto;color:#aebbd0;font-size:13px;line-height:1.6;text-align:left;max-width:650px}
-</style></head><body><main><h1>NORTH <span style="color:#e75e65">vs</span> SOUTH</h1>
-<div class="subtitle">Demostración automática de las dos direcciones · DEV 0.4.1</div>
-<img src="assets/demo-both-v041.gif?v=041" alt="Animación continua: el competidor azul y el rojo alternan el dominio del pulso" width="600" height="300">
-<a href="./?v=041">Ir al juego</a>
-<div class="note">Esta prueba es una animación GIF que arranca sola, sin pulsar ningún botón. El juego utiliza los mismos fotogramas en función del porcentaje de dominio. Los movimientos son discretos y el acabado anatómico del PIN de SOUTH todavía requiere revisión.</div>
-</main></body></html>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NORTH vs SOUTH · QA por dirección</title><style>:root{color-scheme:dark}body{background:#06111f;color:#e7efff;font:15px system-ui;margin:0}main{max-width:730px;margin:auto;padding:18px}button{padding:10px;background:#17324f;border:1px solid #83a5c9;color:white;border-radius:9px}button[aria-pressed="true"]{background:#246eab}div.controls{display:flex;gap:8px}div.controls>*{flex:1}canvas{width:100%;height:auto;aspect-ratio:2/1;border:1px solid #425a73;border-radius:10px}input{width:100%}small{color:#bed0e1}a{color:#8fcbff}</style></head><body><main><h2>NORTH vs SOUTH · QA</h2><p>Prueba una dirección por vez. No se mezclan las dos secuencias. Las imágenes originales todavía requieren revisión anatómica.</p><div class="controls"><button id="north" aria-pressed="true">🔵 Azul</button><button id="south" aria-pressed="false">🔴 Rojo</button><button id="play">▶ Ver</button></div><p><canvas id="scene" width="724" height="362"></canvas></p><input id="slider" type="range" min="50" max="100" step="10" value="50"><p><small id="status">Cargando...</small></p><a href="./">Volver a Combate</a></main><script>
+const c=document.querySelector('#scene'),g=c.getContext('2d'),s=document.querySelector('#slider'),status=document.querySelector('#status'),atlas={},path={NORTH:'assets/frames-north-v04.webp?v=043',SOUTH:'assets/frames-south-v041.webp?v=043'};
+let side='NORTH',active=false,started=0;
+for(const k of ['NORTH','SOUTH']){const im=new Image();atlas[k]=im;im.onload=draw;im.onerror=()=>status.textContent='Error '+k;im.src=path[k]}
+function choose(k){side=k;active=false;s.min=k==='NORTH'?50:0;s.max=k==='NORTH'?100:50;s.value=50;document.querySelector('#north').setAttribute('aria-pressed',String(k==='NORTH'));document.querySelector('#south').setAttribute('aria-pressed',String(k==='SOUTH'));document.querySelector('#play').textContent='▶ Ver';draw()}
+document.querySelector('#north').onclick=()=>choose('NORTH');document.querySelector('#south').onclick=()=>choose('SOUTH');
+document.querySelector('#play').onclick=()=>{active=!active;started=performance.now();document.querySelector('#play').textContent=active?'⏸ Pausar':'↻ Repetir';if(active)requestAnimationFrame(tick)};
+s.oninput=()=>{active=false;document.querySelector('#play').textContent='↻ Repetir';draw()};
+function tick(t){if(!active)return;const u=Math.min(1,(t-started)/3800),v=u*u*(3-2*u),n=side==='NORTH'?50+50*v:50-50*v;s.value=String(Math.round(n/10)*10);draw();if(u>=1){active=false;document.querySelector('#play').textContent='↻ Repetir'}else requestAnimationFrame(tick)}
+function draw(){const im=atlas[side];if(!im?.complete||im.naturalWidth!==2172||im.naturalHeight!==724)return;const f=Math.round(Math.abs(Number(s.value)-50)/10);g.clearRect(0,0,724,362);g.drawImage(im,(f%3)*724,Math.floor(f/3)*362,724,362,0,0,724,362);status.textContent=(side==='NORTH'?'Azul':'Rojo')+' · Postura '+(f+1)+'/6 · Sin validación anatómica'}
+</script></body></html>
