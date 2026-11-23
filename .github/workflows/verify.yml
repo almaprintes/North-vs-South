@@ -49,7 +49,11 @@ jobs:
           assert "frames-south-v041.webp" in html
           assert "const framePreview = !devRig;" in html
           assert "function frameForDominance" in html
-          assert "poseDemoStart=performance.now()" in html
-          print('Both atlas assets present; auto-preview enabled.')
+          assert "function selectPoseDirection" in html
+          assert "function frameForPreview" in html
+          assert "50+50*Math.sin(elapsed*.83)" not in html
+          preview=Path('preview.html').read_text(encoding='utf-8')
+          assert "demo-both-v041.gif" not in preview
+          print('Both atlas assets present; demos isolated by direction.')
           PYCODE
           node tests/frames.test.cjs
